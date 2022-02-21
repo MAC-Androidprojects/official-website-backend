@@ -32,7 +32,6 @@ function validateUser(user) {
  * @apiError (Error 400) valdiationError Something wrong with the body of the request
  * @apiError (Error 400) valdiationError email or password is wrong
  * @apiError (Error 400) verificationError the user didn't verify his/her email
- * @apiHeader (Header) {String} x-auth-token the token when the user signed in
  * @apiBody {String} email The email of the user
  * @apiBody {String} password The password of the user
  * @apiSampleRequest http://127.0.0.1:4000/api/login

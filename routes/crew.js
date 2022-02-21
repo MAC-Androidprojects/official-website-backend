@@ -65,6 +65,7 @@ const memberCheckSchema = checkSchema({
    * @apiGroup Crew Router
    * @apiVersion 1.0.0
    * @apiSuccess {Object[]} Crew A list of all member objects
+   * @apiError (Error 404) CrewNotFound Error occures if there is no crew in the database
    * @apiError (Error 500) internalServerError Error occured during the process from the server 
    * @apiSampleRequest http://127.0.0.1:4000/api/crew
    * @apiSuccessExample crew:
@@ -120,6 +121,7 @@ router.get("/crew", crewController.getAllCrew);
  * @apiGroup crew Router
  * @apiVersion 1.0.0
  * @apiError (Error 400) valdiationError Something wrong with the body of the request
+ * @apiError (Error 500) internalServerError Error occured during the process from the server
  * @apiBody {String} name The name of the member
  * @apiBody {Number} ID The ID of the member
  * @apiBody {String} committee The committee which the member in
@@ -127,12 +129,14 @@ router.get("/crew", crewController.getAllCrew);
  * @apiBody {Boolean} isBest The member is a best member or not
  * @apiBody {String} iamgeID The imagge id of the image of the member
  * @apiSampleRequest http://127.0.0.1:4000/api/crew/member
+ * @apiSuccessExample sample:
+ *ok
  */
 // insert new member w/ validation and sanitization
 router.post("/crew/member", [memberCheckSchema], crewController.postMember);
 
 /**
- * @api {put} /crew Put/ crew (The signed user)
+ * @api {put} /crew/:id Put/ crew:id
  * @apiName putCrewMember
  * @apiGroup Crew Router
  * @apiVersion 1.0.0
@@ -145,7 +149,10 @@ router.post("/crew/member", [memberCheckSchema], crewController.postMember);
  * @apiBody {String} position The position of the member
  * @apiBody {Boolean} isBest The member is a best member or not
  * @apiBody {String} iamgeID The imagge id of the image of the member
- * @apiSampleRequest http://127.0.0.1:4000/api/crew/52
+ * @apiParam {Number} ID id of the member
+ * @apiSampleRequest http://127.0.0.1:4000/api/crew
+ * @apiSuccessExample sample:
+ *ok
  */
 // edit a member w/ validation and sanitization
 router.put("/crew/:id", [memberCheckSchema], crewController.putOneCrew);
@@ -157,7 +164,9 @@ router.put("/crew/:id", [memberCheckSchema], crewController.putOneCrew);
  * @apiError (Error 500) internalServerError Error occured during the process from the server
  * @apiError (Error 404) MemberNotFound No member with given id
  * @apiParam {number} id id of the member
- * @apiSampleRequest http://127.0.0.1:4000/crew/52
+ * @apiSampleRequest http://127.0.0.1:4000/api/crew
+ * @apiSuccessExample sample:
+ *ok
  */
 // delete a member
 router.delete("/crew/:id", crewController.deleteOne);
@@ -166,8 +175,11 @@ router.delete("/crew/:id", crewController.deleteOne);
  * @api {delete} /crew DELETE/ crew
  * @apiName DeleteAllCrew
  * @apiGroup Crew Router
+ * @apiError (Error 404) CrewNotFound Error occures if there is no crew in the database
  * @apiError (Error 500) internalServerError Error occured during the process from the server
- * @apiSampleRequest http://127.0.0.1:4000/crew
+ * @apiSampleRequest http://127.0.0.1:4000/api/crew
+ * @apiSuccessExample sample:
+ *ok
  */
 // delete all crew
 router.delete("/crew", crewController.deleteAll);
